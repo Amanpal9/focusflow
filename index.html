@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FocusFlow — Premium student focus app with Pomodoro timer, app blocker, leaderboard, and analytics." />
+  <meta name="theme-color" content="#08091A" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="FocusFlow — Student Focus App" />
+  <meta property="og:description" content="Beat distractions. Track progress. Outrank your peers." />
+  <meta property="og:type"        content="website" />
+
+  <title>FocusFlow — Student Focus App</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     APP SHELL
+══════════════════════════════════════════ -->
+<div class="app-shell">
+
+  <!-- ── Aurora Background ── -->
+  <div class="aurora" aria-hidden="true">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="orb orb4"></div>
+  </div>
+
+  <!-- ── Screen Container ── -->
+  <main class="screens">
+
+    <!-- ════════════════════════════════════════
+         HOME SCREEN
+    ════════════════════════════════════════ -->
+    <section class="screen active" id="s-home" aria-label="Home">
+
+      <div class="statusbar">
+        <span class="time-badge" id="live-clock" aria-live="polite">9:41</span>
+        <div class="status-icons" aria-hidden="true">
+          <span></span><span style="opacity:.6"></span><span style="opacity:.3"></span>
+        </div>
+      </div>
+
+      <div class="greeting">
+        <p class="greeting-sub">Good morning ☀️</p>
+        <h1 class="greeting-name">Arjun Sharma</h1>
+      </div>
+
+      <!-- Streak Banner -->
+      <div class="streak-bar" role="status" aria-label="21 day study streak">
+        <span class="streak-fire" aria-hidden="true">🔥</span>
+        <div class="streak-text">
+          <div class="streak-num">21 Day Streak</div>
+          <div class="streak-label">Keep the momentum going!</div>
+        </div>
+        <span class="streak-badge">🏆 Top 5%</span>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-row" role="list">
+        <div class="stat-card" role="listitem">
+          <div class="stat-icon" style="background:rgba(124,159,255,0.15);">📚</div>
+          <div class="stat-val" style="color:var(--blue);">5h 42m</div>
+          <div class="stat-lbl">Today's Study</div>
+          <div class="stat-delta">↑ +1h 20m vs avg</div>
+        </div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-icon" style="background:rgba(95,221,187,0.15);">🎯</div>
+          <div class="stat-val" style="color:var(--mint);">87%</div>
+          <div class="stat-lbl">Focus Score</div>
+          <div class="stat-delta">↑ +5pts today</div>
+        </div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-icon" style="background:rgba(197,137,255,0.15);">⚡</div>
+          <div class="stat-val" style="color:var(--purple);">34h</div>
+          <div class="stat-lbl">This Week</div>
+          <div class="stat-delta">Goal: 42h</div>
+        </div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-icon" style="background:rgba(244,162,97,0.15);">🏅</div>
+          <div class="stat-val" style="color:var(--amber);">#4</div>
+          <div class="stat-lbl">Friend Rank</div>
+          <div class="stat-delta">↑ 2 spots up</div>
+        </div>
+      </div>
+
+      <!-- Quick Start CTA -->
+      <button class="quick-start" onclick="switchScreen('focus')" aria-label="Start a focus session">
+        <span>Start Focus Session</span>
+        <div class="qs-arrow" aria-hidden="true">→</div>
+      </button>
+
+      <!-- Subject Filter -->
+      <h2 class="section-title">Subjects</h2>
+      <div class="subjects-row" role="list">
+        <div class="subject-pill active" role="listitem" onclick="toggleSubj(this)" tabindex="0">
+          <div class="subject-dot" style="background:var(--blue)"></div>Mathematics
+        </div>
+        <div class="subject-pill" role="listitem" onclick="toggleSubj(this)" tabindex="0">
+          <div class="subject-dot" style="background:var(--mint)"></div>Physics
+        </div>
+        <div class="subject-pill" role="listitem" onclick="toggleSubj(this)" tabindex="0">
+          <div class="subject-dot" style="background:var(--purple)"></div>Chemistry
+        </div>
+        <div class="subject-pill" role="listitem" onclick="toggleSubj(this)" tabindex="0">
+          <div class="subject-dot" style="background:var(--amber)"></div>Biology
+        </div>
+        <div class="subject-pill" role="listitem" onclick="toggleSubj(this)" tabindex="0">
+          <div class="subject-dot" style="background:var(--red)"></div>English
+        </div>
+      </div>
+
+      <!-- Daily Goal -->
+      <h2 class="section-title mt16">Today's Goal</h2>
+      <div class="card" style="cursor:default; margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-size:14px;font-weight:500;">Daily Target: 7 hours</span>
+          <span style="font-size:12px;color:var(--mint);font-weight:600;">81%</span>
+        </div>
+        <div class="goal-bar-outer">
+          <div class="goal-bar-fill" style="width:81%;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:8px;">
+          <span style="font-size:11px;color:var(--text2);">5h 42m done</span>
+          <span style="font-size:11px;color:var(--text2);">1h 18m left</span>
+        </div>
+      </div>
+
+    </section><!-- /s-home -->
+
+
+    <!-- ════════════════════════════════════════
+         FOCUS SCREEN
+    ════════════════════════════════════════ -->
+    <section class="screen" id="s-focus" aria-label="Focus Timer">
+
+      <div class="statusbar">
+        <span class="time-badge">9:41</span>
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mint);">
+          <span class="pulse" style="width:6px;height:6px;border-radius:50%;background:var(--mint);display:inline-block;" aria-hidden="true"></span>
+          Focus Mode
+        </div>
+      </div>
+
+      <div class="focus-header">
+        <h2 style="font-family:var(--font2);font-weight:700;font-size:20px;">Deep Focus</h2>
+        <p style="font-size:12px;color:var(--text2);margin-top:4px;">Session in progress</p>
+      </div>
+
+      <!-- Subject Selector -->
+      <div class="focus-subject-sel" role="group" aria-label="Select subject">
+        <button class="subj-btn sel" onclick="selectSubj(this)">📐 Maths</button>
+        <button class="subj-btn"     onclick="selectSubj(this)">⚛️ Physics</button>
+        <button class="subj-btn"     onclick="selectSubj(this)">🧪 Chemistry</button>
+        <button class="subj-btn"     onclick="selectSubj(this)">📖 English</button>
+      </div>
+
+      <!-- Pomodoro Ring -->
+      <div class="timer-ring-wrap" role="timer" aria-label="Pomodoro timer">
+        <svg class="timer-ring" width="220" height="220" viewBox="0 0 220 220" aria-hidden="true">
+          <defs>
+            <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#5FDDBB" />
+              <stop offset="100%" stop-color="#7C9FFF" />
+            </linearGradient>
+          </defs>
+          <!-- Track -->
+          <circle cx="110" cy="110" r="96"
+            fill="none"
+            stroke="rgba(255,255,255,0.06)"
+            stroke-width="8" />
+          <!-- Progress -->
+          <circle id="timer-progress" cx="110" cy="110" r="96"
+            fill="none"
+            stroke="url(#timerGradient)"
+            stroke-width="8"
+            stroke-linecap="round"
+            stroke-dasharray="603"
+            stroke-dashoffset="150"
+            style="transition: stroke-dashoffset 1s ease;" />
+        </svg>
+        <div class="timer-text">
+          <div class="timer-display" id="timer-disp">25:00</div>
+          <div class="timer-mode">Pomodoro</div>
+          <div id="session-count" style="font-size:11px;color:var(--text2);margin-top:4px;">Session 1/4</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="timer-controls" role="group" aria-label="Timer controls">
+        <button class="t-btn" onclick="resetTimer()" aria-label="Reset timer" title="Reset">↺</button>
+        <button class="t-btn primary" id="play-btn" onclick="toggleTimer()" aria-label="Start timer">▶</button>
+        <button class="t-btn" onclick="skipTimer()" aria-label="Skip session" title="Skip">⏭</button>
+      </div>
+
+      <!-- Lock Status -->
+      <div class="lock-status" role="status">
+        <span class="lock-icon" id="lock-icon" aria-hidden="true">🔒</span>
+        <div style="flex:1;">
+          <div id="lock-label" style="font-size:13px;font-weight:500;color:var(--mint);">Focus Mode Active</div>
+          <div style="font-size:11px;color:var(--text2);">12 apps blocked · 3 allowed</div>
+        </div>
+        <div class="toggle-wrap">
+          <div class="toggle on" id="focus-toggle" onclick="toggleFocus(this)"
+            role="switch" aria-checked="true" aria-label="Toggle focus mode" tabindex="0">
+            <div class="toggle-knob"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Stats -->
+      <div class="focus-grid" role="list">
+        <div class="focus-stat" role="listitem">
+          <div class="focus-stat-val" style="color:var(--mint);">87</div>
+          <div class="focus-stat-lbl">Focus Score</div>
+        </div>
+        <div class="focus-stat" role="listitem">
+          <div class="focus-stat-val" id="switch-count" style="color:var(--blue);">2</div>
+          <div class="focus-stat-lbl">App Switches</div>
+        </div>
+        <div class="focus-stat" role="listitem">
+          <div class="focus-stat-val" style="color:var(--amber);">3</div>
+          <div class="focus-stat-lbl">Breaks Taken</div>
+        </div>
+        <div class="focus-stat" role="listitem">
+          <div class="focus-stat-val" style="color:var(--purple);">2h 15m</div>
+          <div class="focus-stat-lbl">Session Total</div>
+        </div>
+      </div>
+
+      <!-- App Access -->
+      <div class="focus-apps">
+        <div class="apps-header">
+          <span style="font-size:13px;font-weight:500;">App Access</span>
+          <span style="font-size:11px;color:var(--blue);cursor:pointer;">Edit →</span>
+        </div>
+        <div class="apps-list" role="list">
+          <div class="app-chip allowed" role="listitem">✅ Notes</div>
+          <div class="app-chip allowed" role="listitem">✅ PDF Reader</div>
+          <div class="app-chip allowed" role="listitem">✅ Calculator</div>
+          <div class="app-chip blocked" role="listitem">❌ YouTube</div>
+          <div class="app-chip blocked" role="listitem">❌ Instagram</div>
+          <div class="app-chip blocked" role="listitem">❌ Games</div>
+          <div class="app-chip blocked" role="listitem">❌ Twitter</div>
+        </div>
+      </div>
+
+    </section><!-- /s-focus -->
+
+
+    <!-- ════════════════════════════════════════
+         ANALYTICS SCREEN
+    ════════════════════════════════════════ -->
+    <section class="screen" id="s-analytics" aria-label="Analytics">
+
+      <div class="statusbar">
+        <span class="time-badge">Analytics</span>
+        <span style="font-size:12px;color:var(--text2);">Apr 2026</span>
+      </div>
+
+      <!-- Summary Metrics -->
+      <div class="metric-row" role="list">
+        <div class="metric" role="listitem">
+          <div class="metric-v" style="color:var(--blue);">34h</div>
+          <div class="metric-l">This Week</div>
+        </div>
+        <div class="metric" role="listitem">
+          <div class="metric-v" style="color:var(--mint);">87%</div>
+          <div class="metric-l">Avg Focus</div>
+        </div>
+        <div class="metric" role="listitem">
+          <div class="metric-v" style="color:var(--purple);">↑12%</div>
+          <div class="metric-l">vs Last Wk</div>
+        </div>
+      </div>
+
+      <!-- Weekly Bar Chart -->
+      <div class="chart-card">
+        <h3 class="chart-title">Weekly Study Hours</h3>
+        <p class="chart-sub">Tap a bar to see details</p>
+        <div class="bar-chart" role="img" aria-label="Weekly study hours bar chart">
+          <div class="bar-col"><div class="bar-val">4.2</div><div class="bar" style="height:42%;background:rgba(124,159,255,0.40);"></div><div class="bar-lbl">Mon</div></div>
+          <div class="bar-col"><div class="bar-val">5.8</div><div class="bar" style="height:58%;background:rgba(124,159,255,0.50);"></div><div class="bar-lbl">Tue</div></div>
+          <div class="bar-col"><div class="bar-val">6.1</div><div class="bar" style="height:61%;background:rgba(124,159,255,0.55);"></div><div class="bar-lbl">Wed</div></div>
+          <div class="bar-col"><div class="bar-val">3.5</div><div class="bar" style="height:35%;background:rgba(124,159,255,0.35);"></div><div class="bar-lbl">Thu</div></div>
+          <div class="bar-col"><div class="bar-val">7.2</div><div class="bar" style="height:72%;background:rgba(124,159,255,0.65);"></div><div class="bar-lbl">Fri</div></div>
+          <div class="bar-col"><div class="bar-val">5.7</div><div class="bar" style="height:57%;background:rgba(95,221,187,0.50);"></div><div class="bar-lbl">Sat</div></div>
+          <div class="bar-col">
+            <div class="bar-val">5.7</div>
+            <div class="bar" style="height:57%;background:linear-gradient(180deg,rgba(95,221,187,0.8),rgba(124,159,255,0.8));border:1px solid rgba(95,221,187,0.5);"></div>
+            <div class="bar-lbl" style="color:var(--mint);">Today</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subject Breakdown -->
+      <div class="chart-card">
+        <h3 class="chart-title">Subject Breakdown</h3>
+        <p class="chart-sub">Time distribution this week</p>
+        <div class="subj-breakdown">
+          <div class="subj-row">
+            <span class="subj-name">Mathematics</span>
+            <div class="subj-bar-wrap"><div class="subj-bar-fill" style="width:72%;background:var(--blue);"></div></div>
+            <span class="subj-pct">72%</span>
+          </div>
+          <div class="subj-row">
+            <span class="subj-name">Physics</span>
+            <div class="subj-bar-wrap"><div class="subj-bar-fill" style="width:55%;background:var(--mint);"></div></div>
+            <span class="subj-pct">55%</span>
+          </div>
+          <div class="subj-row">
+            <span class="subj-name">Chemistry</span>
+            <div class="subj-bar-wrap"><div class="subj-bar-fill" style="width:40%;background:var(--purple);"></div></div>
+            <span class="subj-pct">40%</span>
+          </div>
+          <div class="subj-row">
+            <span class="subj-name">Biology</span>
+            <div class="subj-bar-wrap"><div class="subj-bar-fill" style="width:28%;background:var(--amber);"></div></div>
+            <span class="subj-pct">28%</span>
+          </div>
+          <div class="subj-row">
+            <span class="subj-name">English</span>
+            <div class="subj-bar-wrap"><div class="subj-bar-fill" style="width:18%;background:var(--red);"></div></div>
+            <span class="subj-pct">18%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Peak Productivity -->
+      <div class="chart-card" style="margin-bottom:20px;">
+        <h3 class="chart-title">⚡ Peak Productivity</h3>
+        <p class="chart-sub">Your most focused time window</p>
+        <div class="peak-card">
+          <div class="peak-clock" aria-hidden="true">🕙</div>
+          <div>
+            <div style="font-family:var(--font2);font-weight:700;font-size:18px;color:var(--blue);">10:00 – 12:00 AM</div>
+            <div style="font-size:12px;color:var(--text2);margin-top:4px;">Avg focus score: 94 during this window</div>
+            <div style="font-size:11px;color:var(--mint);margin-top:4px;">💡 Schedule hard topics here</div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /s-analytics -->
+
+
+    <!-- ════════════════════════════════════════
+         LEADERBOARD SCREEN
+    ════════════════════════════════════════ -->
+    <section class="screen" id="s-lb" aria-label="Leaderboard">
+
+      <div class="statusbar">
+        <span style="font-family:var(--font2);font-weight:700;font-size:16px;">🏆 Leaderboard</span>
+      </div>
+
+      <!-- Period Switcher -->
+      <div class="period-switch" role="group" aria-label="Time period">
+        <button class="period-btn active" onclick="switchPeriod(this)">Daily</button>
+        <button class="period-btn"        onclick="switchPeriod(this)">Weekly</button>
+        <button class="period-btn"        onclick="switchPeriod(this)">Monthly</button>
+      </div>
+
+      <!-- Podium -->
+      <div class="podium" aria-label="Top 3 students">
+        <!-- 2nd place -->
+        <div class="podium-item pod2">
+          <div class="pod-avatar">R</div>
+          <div class="pod-name">Riya</div>
+          <div class="pod-hrs">8h 12m</div>
+          <div class="pod-stand" aria-hidden="true"></div>
+        </div>
+        <!-- 1st place -->
+        <div class="podium-item pod1">
+          <span aria-hidden="true" style="font-size:24px;margin-bottom:2px;">👑</span>
+          <div class="pod-avatar">P</div>
+          <div class="pod-name">Priya</div>
+          <div class="pod-hrs">10h 5m</div>
+          <div class="pod-stand" aria-hidden="true"></div>
+        </div>
+        <!-- 3rd place -->
+        <div class="podium-item pod3">
+          <div class="pod-avatar">K</div>
+          <div class="pod-name">Karan</div>
+          <div class="pod-hrs">7h 45m</div>
+          <div class="pod-stand" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- Ranked List -->
+      <ol class="lb-list">
+        <li class="lb-row">
+          <div class="lb-rank" style="color:var(--amber);">#1</div>
+          <div class="lb-avatar" style="background:linear-gradient(135deg,#7C9FFF,#C589FF);">P</div>
+          <div class="lb-info">
+            <div class="lb-name">Priya Patel</div>
+            <div class="lb-detail">🔥 28 day streak · Physics ace</div>
+          </div>
+          <div>
+            <div class="lb-hours">10h 5m</div>
+            <div class="lb-delta" style="color:var(--mint);">+45 pts</div>
+          </div>
+        </li>
+        <li class="lb-row">
+          <div class="lb-rank">#2</div>
+          <div class="lb-avatar" style="background:linear-gradient(135deg,#5FDDBB,#7C9FFF);">R</div>
+          <div class="lb-info">
+            <div class="lb-name">Riya Singh</div>
+            <div class="lb-detail">🔥 15 day streak · Maths pro</div>
+          </div>
+          <div>
+            <div class="lb-hours">8h 12m</div>
+            <div class="lb-delta" style="color:var(--mint);">+32 pts</div>
+          </div>
+        </li>
+        <li class="lb-row">
+          <div class="lb-rank">#3</div>
+          <div class="lb-avatar" style="background:linear-gradient(135deg,#F4A261,#FF7B7B);">K</div>
+          <div class="lb-info">
+            <div class="lb-name">Karan Mehta</div>
+            <div class="lb-detail">🔥 9 day streak · Chem master</div>
+          </div>
+          <div>
+            <div class="lb-hours">7h 45m</div>
+            <div class="lb-delta" style="color:var(--mint);">+28 pts</div>
+          </div>
+        </li>
+        <li class="lb-row me" aria-label="Your position">
+          <div class="lb-rank" style="color:var(--blue);">#4</div>
+          <div class="lb-avatar" style="background:linear-gradient(135deg,#7C9FFF,#5FDDBB);">A</div>
+          <div class="lb-info">
+            <div class="lb-name" style="color:var(--blue);">You (Arjun) ★</div>
+            <div class="lb-detail">🔥 21 day streak · All-rounder</div>
+          </div>
+          <div>
+            <div class="lb-hours" style="color:var(--blue);">5h 42m</div>
+            <div class="lb-delta" style="color:var(--amber);">+2 from #6</div>
+          </div>
+        </li>
+        <li class="lb-row">
+          <div class="lb-rank">#5</div>
+          <div class="lb-avatar" style="background:linear-gradient(135deg,#C589FF,#FF7B7B);">S</div>
+          <div class="lb-info">
+            <div class="lb-name">Sana Ahmed</div>
+            <div class="lb-detail">🔥 5 day streak · Biology</div>
+          </div>
+          <div>
+            <div class="lb-hours">5h 10m</div>
+            <div class="lb-delta" style="color:var(--text2);">—</div>
+          </div>
+        </li>
+      </ol>
+
+      <p style="text-align:center;padding:16px 0 20px;font-size:12px;color:var(--text2);">
+        Study 2h 23m more to reach #3 🎯
+      </p>
+
+    </section><!-- /s-lb -->
+
+
+    <!-- ════════════════════════════════════════
+         PROFILE SCREEN
+    ════════════════════════════════════════ -->
+    <section class="screen" id="s-profile" aria-label="Profile">
+
+      <div class="statusbar">
+        <span style="font-family:var(--font2);font-weight:600;font-size:15px;">Profile</span>
+        <span style="font-size:12px;color:var(--text2);cursor:pointer;" role="button" tabindex="0">⚙️ Settings</span>
+      </div>
+
+      <!-- Profile Hero -->
+      <div class="profile-hero">
+        <div class="profile-avatar" aria-hidden="true">🦁</div>
+        <h2 class="profile-name">Arjun Sharma</h2>
+        <div class="profile-level">⚡ Level 12 — Scholar</div>
+        <p style="font-size:11px;color:var(--text2);">3,450 / 5,000 XP to next level</p>
+        <div style="padding:0 20px;margin-top:8px;">
+          <div class="xp-bar" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+            <div class="xp-fill"></div>
+          </div>
+          <div class="xp-label">
+            <span>0 XP</span>
+            <span>5,000 XP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lifetime Stats -->
+      <div class="stats-total" role="list">
+        <div class="stat-tot" role="listitem">
+          <div class="stat-tot-v" style="color:var(--blue);">428h</div>
+          <div class="stat-tot-l">Total Hours</div>
+        </div>
+        <div class="stat-tot" role="listitem">
+          <div class="stat-tot-v" style="color:var(--amber);">21🔥</div>
+          <div class="stat-tot-l">Day Streak</div>
+        </div>
+        <div class="stat-tot" role="listitem">
+          <div class="stat-tot-v" style="color:var(--mint);">24</div>
+          <div class="stat-tot-l">Badges</div>
+        </div>
+      </div>
+
+      <!-- Streak Calendar -->
+      <h2 class="section-title">Streak Calendar — April</h2>
+      <div class="streak-calendar" id="streak-cal" role="img" aria-label="April study streak calendar"></div>
+
+      <!-- Badges -->
+      <h2 class="section-title mt16">Achievements</h2>
+      <div class="badges-grid" role="list">
+        <div class="badge-item" role="listitem"><div class="badge-icon">🔥</div><div class="badge-name">21 Day Streak</div></div>
+        <div class="badge-item" role="listitem"><div class="badge-icon">📚</div><div class="badge-name">100h Scholar</div></div>
+        <div class="badge-item" role="listitem"><div class="badge-icon">🎯</div><div class="badge-name">Perfect Focus</div></div>
+        <div class="badge-item" role="listitem"><div class="badge-icon">⚡</div><div class="badge-name">Speed Demon</div></div>
+        <div class="badge-item" role="listitem"><div class="badge-icon">🌙</div><div class="badge-name">Night Owl</div></div>
+        <div class="badge-item" role="listitem"><div class="badge-icon">🏆</div><div class="badge-name">Leaderboard</div></div>
+        <div class="badge-item locked" role="listitem" aria-label="Locked: 500h Elite"><div class="badge-icon">💎</div><div class="badge-name">500h Elite</div></div>
+        <div class="badge-item locked" role="listitem" aria-label="Locked: 30 Day King"><div class="badge-icon">👑</div><div class="badge-name">30 Day King</div></div>
+      </div>
+
+      <div style="height:20px;"></div>
+    </section><!-- /s-profile -->
+
+  </main><!-- /screens -->
+
+
+  <!-- ── Dock Navigation ── -->
+  <nav class="dock-wrap" aria-label="Main navigation">
+    <div class="dock">
+      <div class="dock-item d-home active" id="di-home" onclick="switchScreen('home')" role="button" tabindex="0" aria-label="Home">
+        <div class="dock-icon" aria-hidden="true">🏠</div>
+        <div class="dock-label">Home</div>
+        <div class="dock-dot" aria-hidden="true"></div>
+      </div>
+      <div class="dock-item d-focus" id="di-focus" onclick="switchScreen('focus')" role="button" tabindex="0" aria-label="Focus Timer">
+        <div class="dock-icon" aria-hidden="true">⏱️</div>
+        <div class="dock-label">Focus</div>
+        <div class="dock-dot" aria-hidden="true"></div>
+      </div>
+      <div class="dock-item d-analytics" id="di-analytics" onclick="switchScreen('analytics')" role="button" tabindex="0" aria-label="Analytics">
+        <div class="dock-icon" aria-hidden="true">📊</div>
+        <div class="dock-label">Stats</div>
+        <div class="dock-dot" aria-hidden="true"></div>
+      </div>
+      <div class="dock-item d-lb" id="di-lb" onclick="switchScreen('lb')" role="button" tabindex="0" aria-label="Leaderboard">
+        <div class="dock-icon" aria-hidden="true">🏆</div>
+        <div class="dock-label">Rank</div>
+        <div class="dock-dot" aria-hidden="true"></div>
+      </div>
+      <div class="dock-item d-profile" id="di-profile" onclick="switchScreen('profile')" role="button" tabindex="0" aria-label="Profile">
+        <div class="dock-icon" aria-hidden="true">🦁</div>
+        <div class="dock-label">Profile</div>
+        <div class="dock-dot" aria-hidden="true"></div>
+      </div>
+    </div>
+  </nav>
+
+</div><!-- /app-shell -->
+
+<!-- App Script -->
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>
