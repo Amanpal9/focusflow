@@ -4,8 +4,6 @@
 
 A premium mobile-first student focus application inspired by Yeolpumta (YPT), rebuilt with a modern dark UI, stricter focus controls, and rich analytics. Designed to help students develop deep work habits and stay accountable.
 
-![FocusFlow Banner](docs/screenshots/banner.png)
-
 ---
 
 ## ✨ Features
@@ -62,8 +60,6 @@ focusflow/
 │   │   └── app.js          # All interactivity — timer, navigation, state
 │   └── icons/
 │       └── favicon.svg     # App icon (add your own)
-├── docs/
-│   └── screenshots/        # Screenshots / demo GIFs
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -75,7 +71,7 @@ focusflow/
 
 ### Option 1 — Open directly (no build needed)
 ```bash
-git clone https://github.com/YOUR_USERNAME/focusflow.git
+git clone https://github.com/ishu7w/focusflow.git
 cd focusflow
 open index.html          # macOS
 # or
@@ -202,3 +198,4 @@ MIT — see [LICENSE](LICENSE) for details.
 <p align="center">
   Made with 💙 to help students focus better
 </p>
+
